@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+
+<!-- Laura Mills Nelson
+	Client Side Programming
+	Assignment 3, Item Entry page
+	April 2, 2020-->
+
+<html lang="en">
+    <head>
+        <title>Item Entry</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .fieldContainer{width:900px;
+                            border: 0px;
+                            border-style:solid;
+                            height: 60px}
+			input {float: right;}
+			#mySubmit {float: left;
+						margin-left: 40px;
+						margin-right: 20px;
+						padding: 10px 20px;;
+						font-weight: bold;
+						border-color: blue;
+						border-width: 3px; }
+			#p1 {color: red;
+				font-weight: bold;}
+            .fieldName{width:300px;
+                       float: left;
+                       border: 0px;
+                       border-style:solid;
+                       height: 30px}
+            .warning{width:400px;
+                     float:left;
+					 margin-left: 20px;
+                     border: 0px;
+                     border-style:solid;
+                     height: 50px;
+                    display: none;
+                    background-color: yellow;}
+            </style>
+            <script>
+			
+			//global variables
+			var nameClear = "x";
+			var numClear = "x";
+			var priceClear = "x";
+			var serialClear = "x";
+			
+			
+			function validateForm()
+			{
+				
+				if((nameClear != "") || (numClear != "") || (priceClear != "") || (serialClear != ""))
+				{
+					document.getElementById("p1").innerHTML = "You have errors in your entry fields."
+					
+					return false;
+					
+				}
+
+				return true;
+
+			}
+			
+						
+			//check Item Name function	
+            function checkName(tagID, warningTag)
+            {
+                var boxContent ="x";
+				var warningMessage = "";
+				nameClear = "x";
+					
+					  
+				//no special characters
+				var illegalChars = /\W/;
+                      
+                boxContent = document.getElementById(tagID).value;
+					  
+				//view boxContent in the console
+                console.log("Test " + boxContent);
+                      
+				if(boxContent.length <= 0)
+                {
+                    warningMessage = "Please enter an Item Name.";
+                }
+				else if (boxContent.length > 20)
+				{
+                    warningMessage = warningMessage + "The Item Name can be no more than 20 characters.";
+                }
+                else if (illegalChars.test(boxContent))
+				{
+                warningMessage = warningMessage + "The Item Name cannot contain any special characters.";	
+				}
+				else
+                {
+					document.getElementById(warningTag).style.display="none";
+					nameClear = "";			
+					document.getElementById("p1").innerHTML = "";
+                }
+
+			
+				if(warningMessage != "")
+                {
+                    document.getElementById(warningTag).style.display="block";
+                    document.getElementById("sp1").innerHTML = 
+					warningMessage;  
+					document.getElementById(tagID).value = "";
+                }
+                      
+            }
+			
+			
+			//check Item Number Function
+			function checkNum(tagID, warningTag)
+            {
+                var boxContent ="x";
+				var warningMessage = "";
+				numClear = "x";
+					  
+				//no letters, spaces, nor some special characters
+				//var illegalChars = /[a-z]|[\s]|[&,!@$%^*()_+=?\/\\|{}\[\]]/gi;
+				var properFormat = /(#)\d\d\d\d\d\d\d(-)\d\d\d(.)\d\d\d/
+                      
+                boxContent= document.getElementById(tagID).value;
+					  
+				//view boxContent in the console
+                console.log("Test " + boxContent);
+                      
+				if(boxContent.length <= 0)
+                {
+                    warningMessage = "Please enter an Item Number.";
+                }
+				else if (!(properFormat.test(boxContent)))
+				{
+					warningMessage = warningMessage + "The Item Number must be in the following format, including the special characters: #0000000-000.000 <br> No letters or other special characters are allowed.";
+				}
+				else
+                {
+						
+					document.getElementById(warningTag).style.display="none";
+					numClear = "";
+					document.getElementById("p1").innerHTML = "";
+                }
+					  
+				if(warningMessage != "")
+                {
+                    document.getElementById(warningTag).style.display="block";
+                    document.getElementById("sp2").innerHTML = 
+					warningMessage;  
+					document.getElementById(tagID).value = "";
+                }					  
+                 
+            }
+				  
+			//check Item Price function
+			function checkPrice(tagID, warningTag)
+            {
+                var boxContent ="x";
+				var warningMessage = "";
+				priceClear = "x";
+					  
+				//no letters, spaces, nor special characters except a period
+				var illegalChars = /[a-z]|[\s]|[&,<>!@#$%^*()_\-+=?\/\\|{}\[\]]/gi;
+
+                      
+                boxContent= document.getElementById(tagID).value;
+					  
+				//view boxContent in the console
+                console.log("Test " + boxContent);
+                      
+				if(boxContent.length <= 0)
+                {
+                    warningMessage = "Please enter an Item Price.";
+                }
+					  
+                else if (illegalChars.test(boxContent))
+				{
+                    warningMessage = warningMessage + "The Item Price cannot contain any letters, spaces, or special characters other than a decimal.";		
+				}
+				else
+                {		
+					document.getElementById(warningTag).style.display="none";
+					priceClear = "";
+					document.getElementById("p1").innerHTML = "";
+                }
+					  
+				if(warningMessage != "")
+                {
+                    document.getElementById(warningTag).style.display="block";
+                    document.getElementById("sp3").innerHTML = 
+					warningMessage;  
+					document.getElementById(tagID).value = "";
+                }					   
+                      
+            }
+				  
+			//check Item Serial Number function	
+            function checkSerialNum(tagID, warningTag)
+            {
+                var boxContent ="x";
+				var warningMessage = "";
+				allClear = "x";
+				serialClear = "x";
+					  
+				//no special characters
+				var illegalChars = /([a-z])|(\W)/g;
+                      
+                boxContent= document.getElementById(tagID).value;
+					  
+				//view boxContent in the console
+                console.log("Test " + boxContent);
+                      
+				if(boxContent.length <= 0)
+                {
+                    warningMessage = "Please enter an Item Serial Number.";
+                }
+				else if((boxContent.length < 9) || (boxContent.length > 9))
+                {
+                    warningMessage = "The Item Serial Number must be 9 digits long and may contain numbers and capital letters.";
+                }
+                else if (illegalChars.test(boxContent))
+				{
+                    warningMessage = warningMessage + "The Item Serial Number cannot contain any special characters or lowercase letters."
+				}
+				else
+                {						
+					document.getElementById(warningTag).style.display="none";
+					serialClear = "";
+					document.getElementById("p1").innerHTML = "";
+                }
+					  
+				if(warningMessage != "")
+                {
+                    document.getElementById(warningTag).style.display="block";
+                    document.getElementById("sp4").innerHTML = 
+					warningMessage;  
+					document.getElementById(tagID).value = "";
+                }					 
+                      
+            }
+				  
+                  
+            function hideWarning(warningTag)
+            {
+                document.getElementById(warningTag).style.display="none";                      
+            }
+			
+				  
+
+				  
+            </script>
+        </head>
+        <body>
+		<form name="ItemEntry" onsubmit="return validateForm()" action="confirmation.html">
+			<h1>Item Entry</h1>
+			<p> (Fields with an * are required) </p>
+            <div class="fieldContainer">
+            <div class="fieldName">
+                <label for="iname">Item Name* &nbsp; </label>
+                <input type="text"
+                       id="iname"
+                       name="iname"
+                       onblur="checkName('iname', 'winame')"
+                       onfocus="hideWarning('winame')">
+            </div>
+            <div class="warning" id='winame'>
+                <span id="sp1"> </span>
+            </div>
+			</div>
+			<div class="fieldContainer">
+            <div class="fieldName">
+                <label for="inum">Item Number* &nbsp;</label>
+                <input type="text" id="inum" name="inum"
+                       onblur="checkNum('inum', 'winum')"
+                       onfocus="hideWarning('winum')">
+            </div>
+            <div class="warning" id='winum'>
+                <span id="sp2"> </span>
+            </div>
+			</div>
+			<div class="fieldContainer">
+            <div class="fieldName">
+                <label for="iprice">Item Price* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $</label>
+                <input type="text" id="iprice" name="iprice"
+                       onblur="checkPrice('iprice', 'wiprice')"
+                       onfocus="hideWarning('wiprice')">
+            </div>
+            <div class="warning" id="wiprice">
+                <span id="sp3"> </span>
+            </div>
+			</div>
+			<div class="fieldContainer">
+            <div class="fieldName">
+                <label for="isnum">Item Serial Number* &nbsp; </label>
+                <input type="text" id="isnum" name="isnum"
+                       onblur="checkSerialNum('isnum', 'wisnum')"
+                       onfocus="hideWarning('wisnum')">
+            </div>
+            <div class="warning" id="wisnum">
+                <span id="sp4"> </span>
+            </div>
+			</div>
+			<div class="fieldContainer">
+			<div class="fieldName">
+                <label for="descrip">Description &nbsp; </label>
+                <input type="text" id="descrip" name="descrip">
+            </div>
+			</div>
+			<input type = "submit" value = "Submit" id = "mySubmit" name = "mySubmit">
+			<p id="p1"></p>
+		</form>
+
+    </body>
+</html>
+
